@@ -76,6 +76,12 @@ alias vim='nvim'
 alias vi='nvim'
 alias v='nvim'
 
+# >> colima
+alias colima-up='colima start --dns 8.8.8.8 --cpu 4 --memory 8 --mount-type=virtiofs --vm-type=vz'
+alias colima-down='colima stop'
+alias colima-remove='colima delete'
+alias colima-link-docker='sudo ln -sf $HOME/.colima/default/docker.sock /var/run/docker.sock'
+
 # Shell Integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
