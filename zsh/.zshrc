@@ -1,7 +1,6 @@
-if [[ -r "/Users/mrbarboza/.config/zi/init.zsh" ]]; then
-  source "/Users/mrbarboza/.config/zi/init.zsh" && zzinit
+if [[ -r "${XDG_CONFIG_HOME:-${HOME}/.config}/zi/init.zsh" ]]; then
+  source "${XDG_CONFIG_HOME:-${HOME}/.config}/zi/init.zsh" && zzinit
 fi
-
 
 zi ice from"gh-r" as"command" atload'eval "$(starship init zsh)"'
 zi light starship/starship
