@@ -15,9 +15,7 @@ zi ice atinit"
 	ZSH_TMUX_FIXTERM=true;
 	ZSH_TMUX_AUTOSTART=true;
 	ZSH_TMUX_AUTOCONNECT=true;"
-zi snippet OMZP::tmux
 zi snippet OMZP::git
-zi snippet OMZP::sdk
 zi snippet OMZP::sudo
 zi snippet OMZP::aws
 zi snippet OMZP::kubectl
@@ -76,6 +74,9 @@ alias tree='eza --tree $eza_params'
 alias vim='nvim'
 alias vi='nvim'
 alias v='nvim'
+
+# >> vscode
+alias c='code'
 
 # >> colima
 alias colima-up='colima start --dns 8.8.8.8 --cpu 4 --memory 8 --mount-type=virtiofs --vm-type=vz'
