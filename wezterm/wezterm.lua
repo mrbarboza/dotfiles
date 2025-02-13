@@ -53,7 +53,7 @@ config.font_rules = {
 config.font_size = 17.0
 
 config.window_decorations = "RESIZE"
-config.window_background_opacity = 0.98
+config.window_background_opacity = 0.88
 
 config.hide_tab_bar_if_only_one_tab = true
 
@@ -74,10 +74,43 @@ config.keys = {
 		mods = "LEADER",
 		action = wezterm.action.TogglePaneZoomState,
 	},
+	-- Giving a TMUX keybinding for Wezterm
 	{
-		key = "Space",
+		key = ",",
 		mods = "LEADER",
-		action = wezterm.action.RotatePanes("Clockwise"),
+		action = wezterm.action.PromptInputLine({
+			description = "Enter new name for tab",
+			action = wezterm.action_callback(function(window, pane, line)
+				if line then
+					window:active_tab():set_title(line)
+				end
+			end),
+		}),
+	},
+	{
+		key = "c",
+		mods = "LEADER",
+		action = wezterm.action.SpawnTab("CurrentPaneDomain"),
+	},
+	{
+		key = "&",
+		mods = "LEADER",
+		action = wezterm.action.CloseCurrentPane({ confirm = true }),
+	},
+	{
+		key = "w",
+		mods = "LEADER",
+		action = wezterm.action.ShowTabNavigator,
+	},
+	{
+		key = "n",
+		mods = "LEADER",
+		action = wezterm.action.ActivateTabRelative(1),
+	},
+	{
+		key = "p",
+		mods = "LEADER",
+		action = wezterm.action.ActivateTabRelative(-1),
 	},
 }
 
