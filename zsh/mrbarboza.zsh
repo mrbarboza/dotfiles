@@ -71,7 +71,7 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 
 # Aliases
 alias ls='ls --color'
-alias ll='ls -la'
+alias ll='ls -latr'
 alias v='nvim'
 
 # Shell integrations
