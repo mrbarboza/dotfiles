@@ -73,6 +73,7 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 alias ls='ls --color'
 alias ll='ls -latr'
 alias v='nvim'
+alias e='emacs -nw'
 
 # Shell integrations
 eval "$(fzf --zsh)"
