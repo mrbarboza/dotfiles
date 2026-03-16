@@ -2,6 +2,7 @@
 (setq doom-front (font-spec :family "JetBrains Mono" :size 15))
 (setq display-line-numbers-type 'relative)
 (setq confirm-kill-emacs nil)
+(setq doom-localleader-key ",")
 
 (map! :leader
       :desc "Comment line" "-" #'comment-line)
@@ -33,3 +34,24 @@
 '(org-level-2 :inherit outline-2 :height 1.5)
 '(org-level-1 :inherit outline-1 :height 1.6)
 '(org-document-title  :height 1.8 :bold t :underline nil))
+
+(defconst mrbarboza/nu-dir
+  (expand-file-name "dev/nu" (getenv "HOME")))
+
+(setq read-process-output-max (* 1024 1024))
+(when (file-directory-p mrbarboza/nu-dir)
+  (setq projectile-project-search-path (list mrbarboza/nu-dir)
+        projectile-enable-caching nil))
+
+(use-package! lsp-mode
+  :commands lsp
+  :config
+  (setq lsp-semantic-tokens-enable t)
+  (add-hook 'lsp-after-apply-edits-hook
+            (lambda (&rest _)
+              (save-buffer))))
+
+(let ((nudev-emacs-path (expand-file-name "nudev/ides/emacs/" mrbarboza/nu-dir)))
+  (when (file-directory-p nudev-emacs-path)
+    (add-to-list 'load-path nudev-emacs-path)
+    (require 'nu nil t)))
