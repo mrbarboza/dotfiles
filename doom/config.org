@@ -9,12 +9,15 @@
   - [[#headers][Headers]]
   - [[#toggle-markdown-view][Toggle Markdown View]]
 - [[#org][Org]]
+  - [[#org-roam][Org-Roam]]
   - [[#headers-1][Headers]]
 - [[#nubank-config][Nubank Config]]
   - [[#project-search-directory][Project Search Directory]]
   - [[#custom-tools][Custom Tools]]
 
 * Doom Settings
+
+Global Doom Emacs settings. Sets the theme to `doom-tokyo-night`, font to `JetBrains Mono` size 15, relative line numbers, disables the kill-emacs confirmation prompt, and maps the `localleader` key to `,.`
 
 #+begin_src emacs_lisp
 (setq doom-theme 'doom-tokyo-night)
@@ -29,6 +32,8 @@
 
 ** Comment Line
 
+Maps `SPC -` to comment/uncomment the current line using `comment-line`.
+
 #+begin_src emacs_list
 (map! :leader
       :desc "Comment line" "-" #'comment-line)
@@ -38,6 +43,8 @@
 * Markdown
 
 ** Headers
+
+Visually customizes Markdown headers using the `variable-pitch` font family, bold weight, and decreasing heights from `1.6` (H1) down to `1.1` (H6), all inheriting from `font-lock-function-name-face`.
 
 #+begin_src emacs-lisp
 (custom-set-faces
@@ -53,6 +60,8 @@
 
 ** Toggle Markdown View
 
+Defines an interactive function that toggles between `markdown-mode` (editing) and `markdown-view-mode` (read-only preview). Useful for checking the document's rendered appearance without leaving the buffer.
+
 #+begin_src emacs-lisp
 (defun mrbarboza/toggle-markdown-view-mode ()
   "Toggle between `markdown-mode' and `markdown-view-mode'."
@@ -65,7 +74,22 @@
 
 * Org
 
+** Org-Roam
+
+Creates the `~/vault` directory (if it doesn't exist), sets it as the Org-Roam directory, and enables database autosync — required for links and backlinks to work automatically.
+
+#+begin_src emacs-lisp
+(make-directory "~/vault")
+(setq org-roam-directory (file-truename "~/vault"))
+
+;; Enable Org-Roam autosync 
+(org-roam-db-autosync-mode)
+
+#+end_src
+
 ** Headers
+
+Customizes Org heading faces specifically for the `doom-tokyo-night` theme, with heights decreasing from `1.6` (level 1) to `1.0` (levels 7 and 8), and the document title at `1.8` with bold and no underline.
 
 #+begin_src emacs-lisp
 (custom-theme-set-faces!
@@ -84,7 +108,7 @@
 
 * Nubank Config
 
-This config will only work on Nubank environment.
+Defines a constant holding the absolute path to `~/dev/nu`, used as the base for all Nubank-specific configurations below.
 
 #+begin_src emacs-lisp
 (defconst mrbarboza/nu-dir
@@ -97,6 +121,8 @@ This config will only work on Nubank environment.
 
 ** Project Search Directory
 
+Increases the process output buffer to 1MB (improves LSP performance), and — if `~/dev/nu` exists — configures Projectile to search for projects there and disables caching (likely because projects change frequently in Nubank's monorepo).
+
 #+begin_src emacs-lisp
 (setq read-process-output-max (* 1024 1024))
 (when (file-directory-p mrbarboza/nu-dir)
@@ -106,6 +132,8 @@ This config will only work on Nubank environment.
 #+end_src
 
 ** Custom Tools
+
+Configures `lsp-mode` with semantic tokens enabled and a hook that auto-saves the buffer after LSP applies edits (e.g. code actions, renames). Then conditionally loads the internal `nu` package from `nudev` — Nubank's internal dev tooling — if the path exists on disk.
 
 #+begin_src emacs-lisp
 (use-package! lsp-mode

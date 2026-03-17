@@ -23,6 +23,12 @@
       (markdown-mode)
     (markdown-view-mode)))
 
+(make-directory "~/vault")
+(setq org-roam-directory (file-truename "~/vault"))
+
+;; Enable Org-Roam autosync 
+(org-roam-db-autosync-mode)
+
 (custom-theme-set-faces!
 'doom-tokyo-night
 '(org-level-8 :inherit outline-3 :height 1.0)
