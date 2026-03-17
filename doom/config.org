@@ -79,7 +79,6 @@ Defines an interactive function that toggles between `markdown-mode` (editing) a
 Creates the `~/vault` directory (if it doesn't exist), sets it as the Org-Roam directory, and enables database autosync — required for links and backlinks to work automatically.
 
 #+begin_src emacs-lisp
-(make-directory "~/vault")
 (setq org-roam-directory (file-truename "~/vault"))
 
 ;; Enable Org-Roam autosync 

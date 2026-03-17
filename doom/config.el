@@ -23,7 +23,6 @@
       (markdown-mode)
     (markdown-view-mode)))
 
-(make-directory "~/vault")
 (setq org-roam-directory (file-truename "~/vault"))
 
 ;; Enable Org-Roam autosync 
