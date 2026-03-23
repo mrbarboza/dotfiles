@@ -23,10 +23,53 @@
       (markdown-mode)
     (markdown-view-mode)))
 
-(setq org-roam-directory (file-truename "~/vault"))
+(setq org-roam-directory "~/vault/"
+      org-roam-dailies-directory "daily/")
 
 ;; Enable Org-Roam autosync 
 (org-roam-db-autosync-mode)
+
+(setq org-roam-capture-templates
+  '(("d" "default" plain
+     "%?"
+     :target (file+head "${slug}.org"
+              "#+title: ${title}\n#+filetags: \n#+date: %T\n\n")
+     :unnarrowed t)
+
+    ("l" "literature note" plain
+     "* Source\n%?\n\n* Notes\n\n* Summary"
+     :target (file+head "literature/${slug}.org"
+              "#+title: ${title}\n#+filetags: :literature:\n#+date: %T\n\n")
+     :unnarrowed t)
+
+    ("p" "permanent note" plain
+     "%?"
+     :target (file+head "permanent/${slug}.org"
+              "#+title: ${title}\n#+filetags: :permanent:\n#+date: %T\n\n")
+     :unnarrowed t)))
+
+(setq org-roam-dailies-capture-templates
+  '(("d" "default" entry
+     "* %<%H:%M> %?"
+     :target (file+head "%<%Y-%m-%d>.org"
+              "#+title: %<%Y-%m-%d>\n#+filetags: :daily:\n\n"))))
+
+(use-package! org-roam-ui
+  :after org-roam
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start nil))
+
+(use-package! consult-org-roam
+  :after org-roam
+  :config
+  (consult-org-roam-mode 1)
+  :bind
+  (:map doom-leader-notes-map
+   ("r s" . consult-org-roam-search)     ; SPC n r s — full-text search
+   ("r B" . consult-org-roam-backlinks))) ; SPC n r B — backlinks via consult
 
 (custom-theme-set-faces!
 'doom-tokyo-night
