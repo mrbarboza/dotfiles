@@ -19,7 +19,7 @@
 
 Global Doom Emacs settings. Sets the theme to `doom-tokyo-night`, font to `JetBrains Mono` size 15, relative line numbers, disables the kill-emacs confirmation prompt, and maps the `localleader` key to `,.`
 
-#+begin_src emacs_lisp
+#+begin_src emacs-lisp
 (setq doom-theme 'doom-tokyo-night)
 (setq doom-font (font-spec :family "JetBrains Mono" :size 15))
 (setq display-line-numbers-type 'relative)
@@ -34,7 +34,7 @@ Global Doom Emacs settings. Sets the theme to `doom-tokyo-night`, font to `JetBr
 
 Maps `SPC -` to comment/uncomment the current line using `comment-line`.
 
-#+begin_src emacs_list
+#+begin_src emacs-lisp
 (map! :leader
       :desc "Comment line" "-" #'comment-line)
 
@@ -76,44 +76,85 @@ Defines an interactive function that toggles between `markdown-mode` (editing) a
 
 ** Org-Roam
 
-Define the `~/vault/` directory as the Org-Roam directory, and enables database autosync — required for links and backlinks to work automatically.
+Define the `~/vault/` directory as the Org-Roam directory, enables database autosync, shows tags in the node-find completion UI, and enables inline link insertion anywhere.
 
 #+begin_src emacs-lisp
 (setq org-roam-directory "~/vault/"
       org-roam-dailies-directory "daily/")
 
-;; Enable Org-Roam autosync 
-(org-roam-db-autosync-mode)
-
+(after! org-roam
+  (org-roam-db-autosync-mode)
+  (setq org-roam-node-display-template
+        (concat "${title:*} " (propertize "${tags:20}" 'face 'org-tag)))
+  (setq org-roam-completion-everywhere t))
 #+end_src
 
-Defintion of template to new notes
+Enginering Manager capture templates: fleeting (inbox), person (direct reports/stakeholders), 1-on-1, meeting, decision log, feedback, reading, project, and structure (MOC). People and project notes live in their own subdirectories; everything else is flat in `~/vault/` with timestamp-prefixed filenames.
 
 #+begin_src emacs-lisp
 (setq org-roam-capture-templates
-  '(("d" "default" plain
+  '(("f" "fleeting" plain
      "%?"
-     :target (file+head "${slug}.org"
-              "#+title: ${title}\n#+filetags: \n#+date: %T\n\n")
+     :target (file+head "inbox/%<%Y%m%d%H%M%S>-${slug}.org"
+              "#+title: ${title}\n#+filetags: :fleeting:\n#+date: %T\n\n")
      :unnarrowed t)
 
-    ("l" "literature note" plain
-     "* Source\n%?\n\n* Notes\n\n* Summary"
-     :target (file+head "literature/${slug}.org"
-              "#+title: ${title}\n#+filetags: :literature:\n#+date: %T\n\n")
+    ("p" "person" plain
+     "* Role\n%?\n\n* Strengths\n\n* Growth Areas\n\n* Career Goals\n\n* Notes"
+     :target (file+head "people/%<%Y%m%d%H%M%S>-${slug}.org"
+              "#+title: ${title}\n#+filetags: :person:\n#+date: %T\n\n")
      :unnarrowed t)
 
-    ("p" "permanent note" plain
-     "%?"
-     :target (file+head "permanent/${slug}.org"
-              "#+title: ${title}\n#+filetags: :permanent:\n#+date: %T\n\n")
+    ("o" "1-on-1" plain
+     "* Date: %<%Y-%m-%d>\n\n* Agenda\n%?\n\n* Updates\n\n* Action Items\n\n* Notes"
+     :target (file+head "1on1/%<%Y%m%d%H%M%S>-${slug}.org"
+              "#+title: ${title}\n#+filetags: :1on1:\n#+date: %T\n\n")
+     :unnarrowed t)
+
+    ("m" "meeting" plain
+     "* Attendees\n%?\n\n* Agenda\n\n* Discussion\n\n* Decisions\n\n* Action Items"
+     :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+              "#+title: ${title}\n#+filetags: :meeting:\n#+date: %T\n\n")
+     :unnarrowed t)
+
+    ("d" "decision" plain
+     "* Context\n%?\n\n* Options Considered\n\n* Decision\n\n* Rationale\n\n* Consequences"
+     :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+              "#+title: ${title}\n#+filetags: :decision:\n#+date: %T\n\n")
+     :unnarrowed t)
+
+    ("k" "feedback" plain
+     "* Person\n%?\n\n* Context\n\n* Observation\n\n* Impact\n\n* Ask / Suggestion"
+     :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+              "#+title: ${title}\n#+filetags: :feedback:\n#+date: %T\n\n")
+     :unnarrowed t)
+
+    ("j" "project" plain
+     "* Goal\n%?\n\n* Status\n\n* Team\n\n* Key Decisions\n\n* Risks\n\n* Updates"
+     :target (file+head "projects/%<%Y%m%d%H%M%S>-${slug}.org"
+              "#+title: ${title}\n#+filetags: :project:\n#+date: %T\n\n")
+     :unnarrowed t)
+
+    ("s" "structure (MOC)" plain
+     "* Overview\n%?\n\n* Index\n\n* Related Structures"
+     :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+              "#+title: ${title}\n#+filetags: :structure:\n#+date: %T\n\n")
      :unnarrowed t)))
 
 (setq org-roam-dailies-capture-templates
-  '(("d" "default" entry
-     "* %<%H:%M> %?"
+  '(("d" "default" plain
+     "* Focus\n%?\n\n* Meetings\n\n* Action Items\n\n* Notes"
      :target (file+head "%<%Y-%m-%d>.org"
               "#+title: %<%Y-%m-%d>\n#+filetags: :daily:\n\n"))))
+#+end_src
+
+Opens `~/vault/inbox/` via `SPC n r I`, `~/vault/people/` via `SPC n r P`, and `~/vault/1on1/` via `SPC n r O`.
+
+#+begin_src emacs-lisp
+(map! :leader
+      :desc "Open inbox in dired"   "n r I" #'(lambda () (interactive) (dired "~/vault/inbox/"))
+      :desc "Open people in dired"  "n r P" #'(lambda () (interactive) (dired "~/vault/people/"))
+      :desc "Open 1-on-1s in dired" "n r O" #'(lambda () (interactive) (dired "~/vault/1on1/")))
 #+end_src
 
 Defining `org-roam-ui`
@@ -140,6 +181,18 @@ Defining full-text search
    ("r s" . consult-org-roam-search)     ; SPC n r s — full-text search
    ("r B" . consult-org-roam-backlinks))) ; SPC n r B — backlinks via consult
 #+end_src
+
+Defining *inline* highlight with backticks (*`*)
+
+#+begin_src emacs-lisp
+(after! org
+  ;; Add backtick as inline code marker (like Markdown)
+  (add-to-list 'org-emphasis-alist
+               '("`" (:inherit font-lock-constant-face :foreground "#b16286")))
+  (setcar (nthcdr 2 org-emphasis-regexp-components) " \t\r\n,\"')}")
+  (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components))
+
+#+end_src 
 
 ** Headers
 
