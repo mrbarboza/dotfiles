@@ -24,7 +24,7 @@
     (markdown-view-mode)))
 
 (setq org-roam-directory "~/vault/"
-      org-roam-dailies-directory "daily/")
+      org-roam-dailies-directory "logs/")
 
 (after! org-roam
   (org-roam-db-autosync-mode)
@@ -33,40 +33,18 @@
   (setq org-roam-completion-everywhere t))
 
 (setq org-roam-capture-templates
-  '(("f" "fleeting" plain
+  '(("i" "idea" plain
      "%?"
-     :target (file+head "inbox/%<%Y%m%d%H%M%S>-${slug}.org"
-              "#+title: ${title}\n#+filetags: :fleeting:\n#+date: %T\n\n")
+     :target (file+head "ideas/%<%Y%m%d%H%M%S>-${slug}.org"
+              "#+title: ${title}\n#+filetags: :idea:\n#+date: %T\n\n")
      :unnarrowed t)
 
-    ("p" "person" plain
+    ("p" "person")
+
+    ("pp" "profile" plain
      "* Role\n%?\n\n* Strengths\n\n* Growth Areas\n\n* Career Goals\n\n* Notes"
      :target (file+head "people/%<%Y%m%d%H%M%S>-${slug}.org"
               "#+title: ${title}\n#+filetags: :person:\n#+date: %T\n\n")
-     :unnarrowed t)
-
-    ("o" "1-on-1" plain
-     "* Date: %<%Y-%m-%d>\n\n* Agenda\n%?\n\n* Updates\n\n* Action Items\n\n* Notes"
-     :target (file+head "1on1/%<%Y%m%d%H%M%S>-${slug}.org"
-              "#+title: ${title}\n#+filetags: :1on1:\n#+date: %T\n\n")
-     :unnarrowed t)
-
-    ("m" "meeting" plain
-     "* Attendees\n%?\n\n* Agenda\n\n* Discussion\n\n* Decisions\n\n* Action Items"
-     :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-              "#+title: ${title}\n#+filetags: :meeting:\n#+date: %T\n\n")
-     :unnarrowed t)
-
-    ("d" "decision" plain
-     "* Context\n%?\n\n* Options Considered\n\n* Decision\n\n* Rationale\n\n* Consequences"
-     :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-              "#+title: ${title}\n#+filetags: :decision:\n#+date: %T\n\n")
-     :unnarrowed t)
-
-    ("k" "feedback" plain
-     "* Person\n%?\n\n* Context\n\n* Observation\n\n* Impact\n\n* Ask / Suggestion"
-     :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-              "#+title: ${title}\n#+filetags: :feedback:\n#+date: %T\n\n")
      :unnarrowed t)
 
     ("j" "project" plain
@@ -75,10 +53,36 @@
               "#+title: ${title}\n#+filetags: :project:\n#+date: %T\n\n")
      :unnarrowed t)
 
-    ("s" "structure (MOC)" plain
-     "* Overview\n%?\n\n* Index\n\n* Related Structures"
-     :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-              "#+title: ${title}\n#+filetags: :structure:\n#+date: %T\n\n")
+    ("b" "playbook" plain
+     "* Purpose\n%?\n\n* When to Use\n\n* Steps\n\n* Notes"
+     :target (file+head "playbooks/%<%Y%m%d%H%M%S>-${slug}.org"
+              "#+title: ${title}\n#+filetags: :playbook:\n#+date: %T\n\n")
+     :unnarrowed t)
+
+    ("l" "log")
+
+    ("lm" "meeting" plain
+     "* Attendees\n%?\n\n* Agenda\n\n* Discussion\n\n* Decisions\n\n* Action Items"
+     :target (file+head "logs/%<%Y%m%d%H%M%S>-${slug}.org"
+              "#+title: ${title}\n#+filetags: :log:meeting:\n#+date: %T\n\n")
+     :unnarrowed t)
+
+    ("po" "1-on-1" plain
+     "* Date: %<%Y-%m-%d>\n\n* Agenda\n%?\n\n* Updates\n\n* Action Items\n\n* Notes"
+     :target (file+head "people/%<%Y%m%d%H%M%S>-${slug}.org"
+              "#+title: ${title}\n#+filetags: :person:1on1:\n#+date: %T\n\n")
+     :unnarrowed t)
+
+    ("ld" "decision" plain
+     "* Context\n%?\n\n* Options Considered\n\n* Decision\n\n* Rationale\n\n* Consequences"
+     :target (file+head "logs/%<%Y%m%d%H%M%S>-${slug}.org"
+              "#+title: ${title}\n#+filetags: :log:decision:\n#+date: %T\n\n")
+     :unnarrowed t)
+
+    ("pf" "feedback" plain
+     "* Person\n%?\n\n* Context\n\n* Observation\n\n* Impact\n\n* Ask / Suggestion"
+     :target (file+head "people/%<%Y%m%d%H%M%S>-${slug}.org"
+              "#+title: ${title}\n#+filetags: :person:feedback:\n#+date: %T\n\n")
      :unnarrowed t)))
 
 (setq org-roam-dailies-capture-templates
@@ -88,9 +92,11 @@
               "#+title: %<%Y-%m-%d>\n#+filetags: :daily:\n\n"))))
 
 (map! :leader
-      :desc "Open inbox in dired"   "n r I" #'(lambda () (interactive) (dired "~/vault/inbox/"))
-      :desc "Open people in dired"  "n r P" #'(lambda () (interactive) (dired "~/vault/people/"))
-      :desc "Open 1-on-1s in dired" "n r O" #'(lambda () (interactive) (dired "~/vault/1on1/")))
+      :desc "Open ideas in dired"     "n r I" #'(lambda () (interactive) (dired "~/vault/ideas/"))
+      :desc "Open people in dired"    "n r P" #'(lambda () (interactive) (dired "~/vault/people/"))
+      :desc "Open projects in dired"  "n r J" #'(lambda () (interactive) (dired "~/vault/projects/"))
+      :desc "Open playbooks in dired" "n r B" #'(lambda () (interactive) (dired "~/vault/playbooks/"))
+      :desc "Open logs in dired"      "n r L" #'(lambda () (interactive) (dired "~/vault/logs/")))
 
 (use-package! org-roam-ui
   :after org-roam
@@ -106,8 +112,7 @@
   (consult-org-roam-mode 1)
   :bind
   (:map doom-leader-notes-map
-   ("r s" . consult-org-roam-search)     ; SPC n r s — full-text search
-   ("r B" . consult-org-roam-backlinks))) ; SPC n r B — backlinks via consult
+   ("r s" . consult-org-roam-search)))   ; SPC n r s — full-text search
 
 (after! org
   ;; Add backtick as inline code marker (like Markdown)
@@ -127,6 +132,23 @@
 '(org-level-2 :inherit outline-2 :height 1.5)
 '(org-level-1 :inherit outline-1 :height 1.6)
 '(org-document-title  :height 1.8 :bold t :underline nil))
+
+(use-package! claude-code
+  :config
+  (setq claude-code-claude-command "claude")
+  (setq claude-code-terminal-backend 'vterm)
+  (setq claude-code-display-window-fn
+        (lambda (buffer)
+          (display-buffer buffer '((display-buffer-in-side-window)
+                                   (side . right)
+                                   (window-width . 0.4))))))
+
+(map! :leader
+      (:prefix ("A" . "AI")
+       :desc "Claude Code"        "c" #'claude-code
+       :desc "Send region"        "r" #'claude-code-send-region
+       :desc "Send buffer"        "b" #'claude-code-send-buffer
+       :desc "Menu"               "m" #'claude-code-menu))
 
 (defconst mrbarboza/nu-dir
   (expand-file-name "dev/nu" (getenv "HOME")))

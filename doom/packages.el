@@ -56,3 +56,7 @@
 (package! tldr)
 (package! org-roam-ui)
 (package! consult-org-roam)
+
+(package! claude-code
+  :recipe (:host github :repo "stevemolitor/claude-code.el"
+           :files ("*.el")))

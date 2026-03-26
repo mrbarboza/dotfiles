@@ -11,6 +11,7 @@
 - [[#org][Org]]
   - [[#org-roam][Org-Roam]]
   - [[#headers-1][Headers]]
+- [[#claude-code][Claude Code]]
 - [[#nubank-config][Nubank Config]]
   - [[#project-search-directory][Project Search Directory]]
   - [[#custom-tools][Custom Tools]]
@@ -215,6 +216,32 @@ Customizes Org heading faces specifically for the `doom-tokyo-night` theme, with
 '(org-level-2 :inherit outline-2 :height 1.5)
 '(org-level-1 :inherit outline-1 :height 1.6)
 '(org-document-title  :height 1.8 :bold t :underline nil))
+
+#+end_src
+
+* Claude Code
+
+Integrates [[https://github.com/stevemolitor/claude-code.el][claude-code.el]] into Doom Emacs, running the Claude Code CLI inside =vterm=. Enables global mode so Claude sessions can be started from any buffer, and exposes all commands under the =SPC A= prefix ("AI").
+
+Requires the =claude= CLI to be on your PATH. If it isn't picked up, run =doom env= in the terminal to refresh Doom's environment snapshot.
+
+#+begin_src emacs-lisp
+(use-package! claude-code
+  :config
+  (setq claude-code-claude-command "claude")
+  (setq claude-code-terminal-backend 'vterm)
+  (setq claude-code-display-window-fn
+        (lambda (buffer)
+          (display-buffer buffer '((display-buffer-in-side-window)
+                                   (side . right)
+                                   (window-width . 0.4))))))
+
+(map! :leader
+      (:prefix ("A" . "AI")
+       :desc "Claude Code"        "c" #'claude-code
+       :desc "Send region"        "r" #'claude-code-send-region
+       :desc "Send buffer"        "b" #'claude-code-send-buffer
+       :desc "Menu"               "m" #'claude-code-menu))
 
 #+end_src
 
