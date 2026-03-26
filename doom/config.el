@@ -1,5 +1,5 @@
 (setq doom-theme 'doom-tokyo-night)
-(setq doom-front (font-spec :family "JetBrains Mono" :size 15))
+(setq doom-font (font-spec :family "JetBrains Mono" :size 15))
 (setq display-line-numbers-type 'relative)
 (setq confirm-kill-emacs nil)
 (setq doom-localleader-key ",")

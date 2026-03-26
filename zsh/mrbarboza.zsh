@@ -1,6 +1,5 @@
-if [[ -f "/opt/homebrew/bin/brew" ]] then
-  # If you're using macOS, you'll want this enabled
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+if command -v brew >/dev/null 2>&1; then
+  eval "$(brew shellenv)"
 fi
 
 # Set the directory we want to store zinit and plugins
@@ -22,7 +21,7 @@ zinit ice as"command" from"gh-r" \
 zinit light starship/starship
 
 eval "$(starship init zsh)"
-export STARSHIP_CONFIG=~/.config/starship/starship.toml
+export STARSHIP_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship.toml"
 
 # Add in zsh plugins
 zinit light zsh-users/zsh-syntax-highlighting
@@ -40,7 +39,8 @@ zinit snippet OMZP::kubectl
 zinit snippet OMZP::command-not-found
 
 # Load completions
-autoload -Uz compinit && compinit
+mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+autoload -Uz compinit && compinit -C -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
 
 zinit cdreplay -q
 
@@ -52,9 +52,10 @@ bindkey '^[w' kill-region
 
 # History
 HISTSIZE=5000
-HISTFILE=~/.zsh_history
+HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history"
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
+mkdir -p "$(dirname "$HISTFILE")"
 setopt appendhistory
 setopt sharehistory
 setopt hist_ignore_space
@@ -67,13 +68,35 @@ setopt hist_find_no_dups
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+if command -v eza >/dev/null 2>&1; then
+  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --color=always --icons=auto --group-directories-first $realpath'
+else
+  case "$(uname -s)" in
+    Darwin) zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -G $realpath' ;;
+    *)      zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color=auto $realpath' ;;
+  esac
+fi
 
 # Aliases
-alias ls='ls --color'
-alias ll='ls -latr'
+if command -v eza >/dev/null 2>&1; then
+  alias ls='eza --group-directories-first'
+  alias ll='eza -la --git --time-style=long-iso --group-directories-first'
+else
+  case "$(uname -s)" in
+    Darwin)
+      alias ls='ls -G'
+      alias ll='ls -latrG'
+      ;;
+    *)
+      alias ls='ls --color=auto'
+      alias ll='ls -latr --color=auto'
+      ;;
+  esac
+fi
 alias v='nvim'
 alias e='emacs -nw'
 
 # Shell integrations
-eval "$(fzf --zsh)"
+if command -v fzf >/dev/null 2>&1; then
+  eval "$(fzf --zsh)"
+fi
