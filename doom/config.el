@@ -141,7 +141,7 @@
         (lambda (buffer)
           (display-buffer buffer '((display-buffer-in-side-window)
                                    (side . right)
-                                   (window-width . 0.4))))))
+                                   (window-width . 0.5))))))
 
 (map! :leader
       (:prefix ("A" . "AI")

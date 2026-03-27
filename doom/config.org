@@ -234,7 +234,7 @@ Requires the =claude= CLI to be on your PATH. If it isn't picked up, run =doom e
         (lambda (buffer)
           (display-buffer buffer '((display-buffer-in-side-window)
                                    (side . right)
-                                   (window-width . 0.4))))))
+                                   (window-width . 0.5))))))
 
 (map! :leader
       (:prefix ("A" . "AI")
