@@ -13,6 +13,7 @@ Personal dev environment configuration managed with [GNU Stow](https://www.gnu.o
 | Doom Emacs | Emacs distribution with evil bindings |
 | LazyGit | Terminal UI for Git |
 | FZF | Fuzzy finder |
+| WezTerm | GPU-accelerated terminal emulator |
 
 ## Prerequisites
 
@@ -25,7 +26,7 @@ Personal dev environment configuration managed with [GNU Stow](https://www.gnu.o
 ```bash
 git clone git@github.com:mrbarboza/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-stow zsh ghostty starship tmux doom lazygit
+stow zsh ghostty starship tmux doom lazygit wezterm
 ```
 
 - Stow symlinks everything into `~/.config/` (configured via `.stowrc`)
@@ -81,6 +82,17 @@ stow zsh ghostty starship tmux doom lazygit
 ### LazyGit
 
 - Uses [Delta](https://github.com/dandavison/delta) for diffs
+
+### WezTerm
+
+- **Theme:** Catppuccin Mocha
+- **Font:** JetBrains Mono 16pt
+- **Background blur:** 30
+- Borderless window (`RESIZE` decorations), tab bar disabled
+- **Keybindings:**
+  - `Ctrl+Q` → toggle fullscreen
+  - `Ctrl+'` → clear scrollback
+  - `Ctrl+Click` → open link under cursor
 
 ## Tmux Plugin Setup
 
