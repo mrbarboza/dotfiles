@@ -14,6 +14,7 @@ Personal dev environment configuration managed with [GNU Stow](https://www.gnu.o
 | LazyGit | Terminal UI for Git |
 | FZF | Fuzzy finder |
 | WezTerm | GPU-accelerated terminal emulator |
+| Neovim | LazyVim-based editor with Clojure and Python support |
 
 ## Prerequisites
 
@@ -26,7 +27,7 @@ Personal dev environment configuration managed with [GNU Stow](https://www.gnu.o
 ```bash
 git clone git@github.com:mrbarboza/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-stow zsh ghostty starship tmux doom lazygit wezterm
+stow zsh ghostty starship tmux doom lazygit wezterm nvim
 ```
 
 - Stow symlinks everything into `~/.config/` (configured via `.stowrc`)
@@ -93,6 +94,15 @@ stow zsh ghostty starship tmux doom lazygit wezterm
   - `Ctrl+Q` → toggle fullscreen
   - `Ctrl+'` → clear scrollback
   - `Ctrl+Click` → open link under cursor
+
+### Neovim
+
+- **Distribution:** [LazyVim](https://www.lazyvim.org/)
+- **Theme:** Catppuccin Mocha
+- **Languages:** Clojure (Conjure, clojure-lsp, clj-kondo), Python (Pyright, Ruff, neotest, nvim-dap)
+- **Extras:** `lang.clojure`, `lang.python`, `dap.core`, `test.core`, `lang.{git,json,markdown,sql,terraform,typescript,yaml}`
+- **Plugins:** tmux-navigator for seamless pane navigation
+- **Post-install:** run `:MasonInstall clojure-lsp clj-kondo` inside nvim
 
 ## Tmux Plugin Setup
 
