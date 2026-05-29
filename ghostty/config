@@ -1,6 +1,129 @@
-font-size = 19
-background-blur-radius = 20
-mouse-hide-while-typing = true
-window-decoration = false
-macos-option-as-alt = true
+# =============================================================================
+# Theme & Colors
+# =============================================================================
 theme = Catppuccin Mocha
+background = 1e1e2e
+foreground = cdd6f4
+selection-background = 585b70
+selection-foreground = cdd6f4
+
+# =============================================================================
+# Cursor
+# =============================================================================
+cursor-color = f5e0dc
+cursor-text = 1e1e2e
+cursor-style = block
+cursor-style-blink = false
+cursor-opacity = 0.9
+cursor-click-to-move = true
+
+# =============================================================================
+# Font
+# =============================================================================
+font-family = JetBrainsMono Nerd Font
+font-size = 16
+font-thicken = true
+font-thicken-strength = 64
+font-feature = calt
+font-feature = liga
+# Use Menlo for box-drawing glyphs (cleaner alignment than Nerd Font)
+font-codepoint-map = U+2500-U+259F=Menlo
+
+# =============================================================================
+# Background & Transparency
+# =============================================================================
+background-opacity = 0.95
+# macos-glass-regular requires macOS 26+. Fallback: use an integer like 20.
+background-blur = macos-glass-regular
+
+# =============================================================================
+# Window — Size, Padding, Decoration
+# =============================================================================
+window-width = 120
+window-height = 35
+window-padding-x = 16
+window-padding-y = 12
+window-padding-balance = true
+window-padding-color = extend
+window-decoration = auto
+window-theme = dark
+window-colorspace = display-p3
+window-save-state = always
+
+# =============================================================================
+# macOS-specific
+# =============================================================================
+macos-titlebar-style = transparent
+macos-non-native-fullscreen = true
+
+# =============================================================================
+# Splits
+# =============================================================================
+unfocused-split-opacity = 0.65
+unfocused-split-fill = 181825
+split-divider-color = 45475a
+
+# =============================================================================
+# Inheritance (new surfaces inherit from current)
+# =============================================================================
+split-inherit-working-directory = true
+tab-inherit-working-directory = true
+window-inherit-working-directory = true
+window-inherit-font-size = true
+
+# =============================================================================
+# Scrollback & Clipboard
+# =============================================================================
+scrollback-limit = 50000
+clipboard-read = allow
+clipboard-write = allow
+clipboard-trim-trailing-spaces = true
+clipboard-paste-protection = true
+clipboard-paste-bracketed-safe = true
+copy-on-select = clipboard
+
+# =============================================================================
+# Shell Integration
+# =============================================================================
+shell-integration = zsh
+shell-integration-features = no-cursor
+term = xterm-256color
+
+# =============================================================================
+# Behavior — Mouse, Resize, Scroll
+# =============================================================================
+confirm-close-surface = false
+mouse-hide-while-typing = true
+focus-follows-mouse = false
+resize-overlay = after-first
+resize-overlay-position = bottom-right
+resize-overlay-duration = 500ms
+scroll-to-bottom = keystroke, no-output
+
+# =============================================================================
+# Palette — Catppuccin Mocha overrides (normal + bright)
+# =============================================================================
+# black
+palette = 0=#45475a
+palette = 8=#585b70
+# red
+palette = 1=#f38ba8
+palette = 9=#f38ba8
+# green
+palette = 2=#a6e3a1
+palette = 10=#a6e3a1
+# yellow
+palette = 3=#f9e2af
+palette = 11=#f9e2af
+# blue
+palette = 4=#89b4fa
+palette = 12=#89b4fa
+# magenta
+palette = 5=#f5c2e7
+palette = 13=#f5c2e7
+# cyan
+palette = 6=#94e2d5
+palette = 14=#94e2d5
+# white
+palette = 7=#bac2de
+palette = 15=#a6adc8
