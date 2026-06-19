@@ -9,6 +9,7 @@ Personal dev environment configuration managed with [GNU Stow](https://www.gnu.o
 | Zsh | Shell with Zinit plugin manager |
 | Starship | Cross-shell prompt |
 | Tmux | Terminal multiplexer |
+| Herdr | Mouse-first agent multiplexer |
 | Ghostty | GPU-accelerated terminal emulator |
 | Doom Emacs | Emacs distribution with evil bindings |
 | LazyGit | Terminal UI for Git |
@@ -27,7 +28,7 @@ Personal dev environment configuration managed with [GNU Stow](https://www.gnu.o
 ```bash
 git clone git@github.com:mrbarboza/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-stow zsh ghostty starship tmux doom lazygit wezterm nvim
+stow zsh ghostty starship tmux herdr doom lazygit wezterm nvim
 ```
 
 - Stow symlinks everything into `~/.config/` (configured via `.stowrc`)
@@ -64,6 +65,21 @@ stow zsh ghostty starship tmux doom lazygit wezterm nvim
   - `yank` — clipboard integration
   - `fzf-url` — open URLs with fzf
   - `sensible` — sensible defaults
+
+### Herdr
+
+Mouse-first agent multiplexer; config mirrors the tmux setup where herdr supports it.
+
+- **Prefix:** `Ctrl+A`
+- **Pane navigation:** vim-style (`h`, `j`, `k`, `l`)
+- **Splits:** `prefix + v` (side-by-side), `prefix + s` (stacked)
+- **Tabs:** `prefix + Shift+H` / `prefix + Shift+L` (prev/next)
+- **Theme:** Catppuccin, magenta accent
+- **Session restore:** agent panes resumed on restart (`resume_agents_on_restore`)
+- Config lives at `~/.config/herdr/config.toml` (stowed as an individual file symlink,
+  since herdr keeps runtime sockets/logs in that same directory)
+- Not ported from tmux: vim-tmux-navigator passthrough, directional resize, and the TPM
+  plugin stack (thumbs/fzf/yank/floax/sessionx) — herdr has its own plugin system
 
 ### Ghostty
 
