@@ -39,9 +39,9 @@ mouse_capture      = true         # tmux: set -g mouse on
 mouse_scroll_lines = 3
 accent             = "magenta"    # echoes tmux magenta active-pane border / floax
 
-agent_panel_scope = "all"
 [session]
 resume_agents_on_restore = true   # closest analog to continuum/resurrect (agents only)
+agent_panel_scope        = "all"
 
 [advanced]
 scrollback_limit_bytes = 10000000 # ~10MB/pane (herdr/Ghostty default; tmux was 1M lines)
