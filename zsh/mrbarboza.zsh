@@ -1,104 +1,142 @@
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x /usr/local/bin/brew ]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+
+# Reevaluate the prompt string each time it's displaying a prompt
+setopt prompt_subst
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+autoload bashcompinit && bashcompinit
+autoload -Uz compinit
+compinit
+
+# Completions (guarded — tools may not be installed)
+if command -v kubectl >/dev/null 2>&1; then
+  source <(kubectl completion zsh)
+fi
+if command -v aws_completer >/dev/null 2>&1; then
+  complete -C "$(command -v aws_completer)" aws
+fi
+
+# zsh-autosuggestions
 if command -v brew >/dev/null 2>&1; then
-  eval "$(brew shellenv)"
+  _zas="$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+  [ -f "$_zas" ] && source "$_zas"
+  unset _zas
 fi
+bindkey '^w' autosuggest-execute
+bindkey '^e' autosuggest-accept
+bindkey '^u' autosuggest-toggle
+bindkey '^L' vi-forward-word
+bindkey '^k' up-line-or-search
+bindkey '^j' down-line-or-search
 
-# Set the directory we want to store zinit and plugins
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-
-# Download Zinit, if it's not there yet
-if [ ! -d "$ZINIT_HOME" ]; then
-   mkdir -p "$(dirname $ZINIT_HOME)"
-   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-fi
-
-# Source/Load zinit
-source "${ZINIT_HOME}/zinit.zsh"
-
-# Add in Starship
-zinit ice as"command" from"gh-r" \
-          atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
-          atpull"%atclone" src"init.zsh"
-zinit light starship/starship
-
+# Starship
+eval "$(starship init zsh)"
 export STARSHIP_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship.toml"
 
-# Add in zsh plugins
-zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
-zinit light Aloxaf/fzf-tab
-zinit light zsh-users/zsh-syntax-highlighting
+# Locale + editor
+export LANG=en_US.UTF-8
+export EDITOR=nvim
 
-# Add in snippets
-zinit snippet OMZL::git.zsh
-zinit snippet OMZP::git
-zinit snippet OMZP::sudo
-zinit snippet OMZP::tmux
-zinit ice wait lucid; zinit snippet OMZP::aws
-zinit ice wait lucid; zinit snippet OMZP::kubectl
-zinit snippet OMZP::command-not-found
+# Claude Code
+alias cc='claude'
 
-# Load completions
-mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
-autoload -Uz compinit && compinit -C -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
+# Basic
+alias la=tree
+alias cat=bat
+alias cl='clear'
+alias v="nvim"
 
-zinit cdreplay -q
+# Git
+alias gc="git commit -m"
+alias gca="git commit -a -m"
+alias gp="git push origin HEAD"
+alias gpu="git pull origin"
+alias gst="git status"
+alias glog="git log --graph --topo-order --pretty='%w(100,0,6)%C(yellow)%h%C(bold)%C(black)%d %C(cyan)%ar %C(green)%an%n%C(bold)%C(white)%s %N' --abbrev-commit"
+alias gdiff="git diff"
+alias gco="git checkout"
+alias gb='git branch'
+alias gba='git branch -a'
+alias gadd='git add'
+alias ga='git add -p'
+alias gcoall='git checkout -- .'
+alias gr='git remote'
+alias gre='git reset'
 
-# Keybindings
-bindkey -e
-bindkey '^p' history-search-backward
-bindkey '^n' history-search-forward
-bindkey '^[w' kill-region
+# Docker
+alias dco="docker compose"
+alias dps="docker ps"
+alias dpa="docker ps -a"
+alias dl="docker ps -l -q"
+alias dx="docker exec -it"
 
-# History
-HISTSIZE=100000
-HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history"
-SAVEHIST=$HISTSIZE
-HISTDUP=erase
-mkdir -p "$(dirname "$HISTFILE")"
-setopt appendhistory
-setopt sharehistory
-setopt hist_ignore_space
-setopt hist_ignore_all_dups
-setopt hist_save_no_dups
-setopt hist_ignore_dups
-setopt hist_find_no_dups
+# Dirs
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ......="cd ../../../../.."
 
-# Completion styling
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-zstyle ':completion:*' menu no
-if command -v eza >/dev/null 2>&1; then
-  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --color=always --icons=auto --group-directories-first $realpath'
-else
-  case "$(uname -s)" in
-    Darwin) zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -G $realpath' ;;
-    *)      zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color=auto $realpath' ;;
-  esac
-fi
+# Kubernetes
+export KUBECONFIG=~/.kube/config
+alias k="kubectl"
+alias ka="kubectl apply -f"
+alias kg="kubectl get"
+alias kd="kubectl describe"
+alias kdel="kubectl delete"
+alias kgpo="kubectl get pod"
+alias kgd="kubectl get deployments"
+alias kc="kubectx"
+alias kns="kubens"
+alias kl="kubectl logs -f"
+alias ke="kubectl exec -it"
+alias kcns='kubectl config set-context --current --namespace'
 
-# Aliases
-if command -v eza >/dev/null 2>&1; then
-  alias ls='eza --group-directories-first'
-  alias ll='eza -la --git --time-style=long-iso --group-directories-first'
-else
-  case "$(uname -s)" in
-    Darwin)
-      alias ls='ls -G'
-      alias ll='ls -latrG'
-      ;;
-    *)
-      alias ls='ls --color=auto'
-      alias ll='ls -latr --color=auto'
-      ;;
-  esac
-fi
-alias v='nvim'
-alias e='emacs -nw'
+# HTTP requests with xh
+alias http="xh"
 
-# Shell integrations
-if command -v fzf >/dev/null 2>&1; then
-  eval "$(fzf --zsh)"
-fi
-if command -v zoxide >/dev/null 2>&1; then
-  eval "$(zoxide init zsh)"
-fi
+# VI Mode
+bindkey jj vi-cmd-mode
+
+# Eza
+alias l="eza -l --icons --git -a"
+alias lt="eza --tree --level=2 --long --icons --git"
+alias ltree="eza --tree --level=2 --icons --git"
+
+# FZF
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow'
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Ranger w/ cd-on-quit
+function ranger {
+  local IFS=$'\t\n'
+  local tempfile="$(mktemp -t tmp.XXXXXX)"
+  local ranger_cmd=(
+    command
+    ranger
+    --cmd="map Q chain shell echo %d > $tempfile; quitall"
+  )
+  ${ranger_cmd[@]} "$@"
+  if [[ -f "$tempfile" ]] && [[ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]]; then
+    cd -- "$(cat "$tempfile")" || return
+  fi
+  command rm -f -- "$tempfile" 2>/dev/null
+}
+alias rr='ranger'
+
+# Navigation helpers
+cx() { cd "$@" && l; }
+fcd() { cd "$(find . -type d -not -path '*/.*' | fzf)" && l; }
+f() { echo "$(find . -type f -not -path '*/.*' | fzf)" | pbcopy }
+fv() { nvim "$(find . -type f -not -path '*/.*' | fzf)" }
+
+# XDG
+export XDG_CONFIG_HOME="$HOME/.config"
+
+# Shell integrations (guarded)
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
+command -v atuin  >/dev/null 2>&1 && eval "$(atuin init zsh)"
+command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
