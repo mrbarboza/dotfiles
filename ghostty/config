@@ -1,8 +1,25 @@
-font-size = 14
-font-family = JetBrains Mono
-window-padding-y = 8
-background-blur = 20
-mouse-hide-while-typing = true
+# Theme (wezterm: color_scheme = "rose-pine-moon")
+theme = Rose Pine Moon
+
+# Font (wezterm: Hack Nerd Font DemiBold, size 15 on macOS)
+font-family = Hack Nerd Font
+font-size = 15
+
+# Window (wezterm: window_decorations = "RESIZE")
 window-decoration = false
+window-padding-y = 8
+
+# Background (wezterm macOS: opacity 0.8, blur 50)
+background-opacity = 0.8
+background-blur = 50
+
+# Inactive split dimming (wezterm: inactive_pane_hsb brightness 0.5)
+unfocused-split-opacity = 0.5
+
+# macOS behavior
 macos-option-as-alt = true
-theme = Catppuccin Mocha
+mouse-hide-while-typing = true
+
+# Keybindings (wezterm: CTRL-q fullscreen, CTRL-' clear scrollback)
+keybind = ctrl+q=toggle_fullscreen
+keybind = ctrl+'=clear_screen
