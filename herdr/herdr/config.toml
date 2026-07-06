@@ -1,47 +1,16 @@
-# herdr configuration — mirrors ~/.config/tmux where herdr supports it.
-# Managed via GNU Stow from ~/dotfiles/herdr/herdr/config.toml
-# Regenerate defaults reference with: herdr --default-config
+onboarding = false
 
 [theme]
-name = "catppuccin"
-
-[keys]
-prefix = "ctrl+a"                 # tmux: set -g prefix ^A
-
-# Moved off prefix+s (herdr default) so s can drive the stacked split, à la tmux
-settings = "prefix+shift+s"
-
-# Splits — tmux: v = side-by-side (split -h), s = stacked (split -v)
-split_vertical   = "prefix+v"     # vertical divider → side by side
-split_horizontal = "prefix+s"     # horizontal divider → stacked (override of prefix+minus)
-
-# Pane focus, vim-style (these match herdr defaults; kept explicit for parity w/ tmux)
-focus_pane_left  = "prefix+h"
-focus_pane_down  = "prefix+j"
-focus_pane_up    = "prefix+k"
-focus_pane_right = "prefix+l"
-
-# Tabs ≈ tmux windows — tmux: H/L prev/next, ^C new-window.
-# Unset the directional swap_pane defaults (prefix+shift+h/l) so they don't
-# collide with these tab binds — tmux didn't use directional swap-pane anyway.
-swap_pane_left  = ""
-swap_pane_right = ""
-previous_tab = "prefix+shift+h"
-next_tab     = "prefix+shift+l"
-new_tab      = "prefix+c"
-
-detach        = "prefix+d"        # tmux muscle memory (herdr default is prefix+q)
-zoom          = "prefix+z"        # tmux: bind z resize-pane -Z
-reload_config = "prefix+shift+r"  # tmux: bind R source-file ... (herdr default)
+name = "rose-pine"
 
 [ui]
-mouse_capture      = true         # tmux: set -g mouse on
+mouse_capture      = true
 mouse_scroll_lines = 3
-accent             = "magenta"    # echoes tmux magenta active-pane border / floax
+accent             = "#f6c178"
 
 [session]
-resume_agents_on_restore = true   # closest analog to continuum/resurrect (agents only)
+resume_agents_on_restore = true
 agent_panel_scope        = "all"
 
 [advanced]
-scrollback_limit_bytes = 10000000 # ~10MB/pane (herdr/Ghostty default; tmux was 1M lines)
+scrollback_limit_bytes = 10000000
