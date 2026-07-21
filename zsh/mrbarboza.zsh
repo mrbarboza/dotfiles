@@ -41,7 +41,8 @@ export LANG=en_US.UTF-8
 export EDITOR=nvim
 
 # Claude Code
-alias cc='claude'
+alias cc='claude --dangerously-skip-permissions'
+alias ca='cursor agent --force --approve-mcps'
 
 # Basic
 alias la=tree
