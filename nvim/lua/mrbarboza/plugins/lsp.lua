@@ -98,6 +98,7 @@ function M.setup()
       "markdownlint-cli2",
       "markdown-toc",
       "hadolint",
+      "clj-kondo",
     }),
   })
 

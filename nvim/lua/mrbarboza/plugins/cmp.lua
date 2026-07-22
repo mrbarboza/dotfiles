@@ -3,6 +3,18 @@ local M = {}
 function M.setup()
   local cmp = require("cmp")
 
+  local primary = {
+    { name = "nvim_lsp" },
+    { name = "path" },
+  }
+  local secondary = {
+    { name = "buffer" },
+  }
+
+  if require("mrbarboza.nubank").enabled() and pcall(require, "cmp_conjure") then
+    table.insert(secondary, 1, { name = "conjure" })
+  end
+
   cmp.setup({
     completion = {
       completeopt = "menu,menuone,noinsert",
@@ -17,12 +29,7 @@ function M.setup()
       ["<CR>"] = cmp.mapping.confirm({ select = true }),
       ["<C-e>"] = cmp.mapping.abort(),
     }),
-    sources = cmp.config.sources({
-      { name = "nvim_lsp" },
-      { name = "path" },
-    }, {
-      { name = "buffer" },
-    }),
+    sources = cmp.config.sources(primary, secondary),
   })
 end
 

@@ -58,6 +58,22 @@ M.plugins = {
   { name = "markdown-preview.nvim", src = "https://github.com/iamcco/markdown-preview.nvim" },
 }
 
+M.nubank_plugins = {
+  -- LazyVim lang.clojure extra
+  { name = "conjure", src = "https://github.com/Olical/conjure" },
+  { name = "cmp-conjure", src = "https://github.com/PaterJason/cmp-conjure" },
+  { name = "nvim-paredit", src = "https://github.com/julienvincent/nvim-paredit" },
+  { name = "baleia.nvim", src = "https://github.com/m00qek/baleia.nvim" },
+}
+
+local function all_plugins()
+  local plugins = vim.deepcopy(M.plugins)
+  if require("mrbarboza.nubank").enabled() then
+    vim.list_extend(plugins, M.nubank_plugins)
+  end
+  return plugins
+end
+
 local function setup_theme()
   require("rose-pine").setup({
     variant = "moon",
@@ -109,6 +125,7 @@ local function setup_plugins()
   require("mrbarboza.plugins.todo-comments").setup()
   require("mrbarboza.plugins.persistence").setup()
   require("mrbarboza.plugins.which-key").setup()
+  require("mrbarboza.nubank").setup()
 end
 
 function M.setup()
@@ -121,7 +138,7 @@ function M.setup()
 
   setup_build_hooks()
 
-  vim.pack.add(vim.iter(M.plugins):map(function(p)
+  vim.pack.add(vim.iter(all_plugins()):map(function(p)
     return { src = p.src, name = p.name }
   end):totable())
 

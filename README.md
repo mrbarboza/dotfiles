@@ -132,6 +132,7 @@ LazyVim-like stack (no Snacks) on Neovim 0.12 [`vim.pack`](https://neovim.io/doc
 | Editing | mini.pairs, mini.comment, mini.surround, yanky |
 | Git | gitsigns, lazygit |
 | Lang | Python, TypeScript (vtsls), Markdown, YAML, Docker |
+| Nubank | Clojure (Conjure, clojure-lsp, paredit), nudev — auto when `~/dev/nu` exists |
 
 **Keymaps (highlights)**
 
@@ -173,6 +174,27 @@ Mason binaries are on `PATH` via [`zsh/mrbarboza.zsh`](zsh/mrbarboza.zsh). After
 - `:Mason` — install any missing LSPs/formatters (yamlls, dockerls, docker-compose-language-service, etc.)
 
 Add plugins in [`nvim/lua/mrbarboza/pack.lua`](nvim/lua/mrbarboza/pack.lua); per-plugin setup lives under [`nvim/lua/mrbarboza/plugins/`](nvim/lua/mrbarboza/plugins/).
+
+**Nubank / Clojure** (LazyVim `lang.clojure`; mirrors [ENGCHAP Neovim guide](https://nubank.atlassian.net/wiki/spaces/ENGCHAP/pages/264253376872/How+to+Configure+Neovim+with+LazyVim+for+Clojure+Bonus+AI+Integrations))
+
+Enabled when `~/dev/nu` exists (or set `NU_HOME`). Disable with `MRBARBOZA_NUBANK=0`. Force on elsewhere with `MRBARBOZA_NUBANK=1`.
+
+| Component | Details |
+|-----------|---------|
+| REPL | [Conjure](https://github.com/Olical/conjure) + `cmp-conjure`; `,K` / `,gd` for doc/def (localleader `,`) |
+| LSP | `clojure-lsp` via Mason |
+| Editing | `nvim-paredit`, treesitter `clojure` |
+| Logs | `baleia.nvim` colorizes Conjure log buffers; `[c` / `]c` jump evaluations |
+| nudev | `:Nu`, `:NuMordorQuery`, `:NuMordorTemplate` when nudev is present |
+| Search | `<leader>fn` / `<leader>sn` — find/grep under `NU_HOME` |
+
+Prerequisites: Java, [Clojure CLI](https://clojure.org/guides/install_clojure). Add nREPL to `~/.clojure/deps.edn`:
+
+```clojure
+{:aliases {:nREPL {:extra-deps {nrepl/nrepl {:mvn/version "1.4.0"}}}}}
+```
+
+Then `:Mason` → install `clojure-lsp`, start a REPL with `clj -M:nREPL`, open a `.clj` file, and connect with Conjure (`:ConjureConnect` if needed).
 
 ## Tmux Plugin Setup
 

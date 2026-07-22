@@ -6,6 +6,10 @@ local modules = {
   require("mrbarboza.plugins.lang.docker"),
 }
 
+if require("mrbarboza.nubank").enabled() then
+  table.insert(modules, require("mrbarboza.plugins.lang.clojure"))
+end
+
 local M = {}
 
 function M.servers()
