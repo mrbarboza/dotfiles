@@ -39,6 +39,16 @@ export STARSHIP_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship.toml
 # Locale + editor
 export LANG=en_US.UTF-8
 export EDITOR=nvim
+export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
+
+# Inside tmux, always match tmux server's default-terminal (avoids stale screen-256color panes)
+if [ -n "$TMUX" ]; then
+  _tmux_term=$(tmux show-option -gv default-terminal 2>/dev/null)
+  if [ -n "$_tmux_term" ]; then
+    export TERM="$_tmux_term"
+  fi
+  unset _tmux_term
+fi
 
 # Claude Code
 alias cc='claude --dangerously-skip-permissions'

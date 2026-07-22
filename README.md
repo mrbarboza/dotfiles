@@ -15,7 +15,7 @@ Personal dev environment configuration managed with [GNU Stow](https://www.gnu.o
 | LazyGit | Terminal UI for Git |
 | FZF | Fuzzy finder |
 | WezTerm | GPU-accelerated terminal emulator |
-| Neovim | LazyVim-based editor with Clojure and Python support |
+| Neovim | Minimal starter config; native `vim.pack`, Rose Pine Moon + transparency |
 
 ## Prerequisites
 
@@ -28,10 +28,12 @@ Personal dev environment configuration managed with [GNU Stow](https://www.gnu.o
 ```bash
 git clone git@github.com:mrbarboza/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-stow zsh ghostty starship tmux herdr doom lazygit wezterm nvim
+stow zsh ghostty starship tmux herdr doom lazygit wezterm
+stow -t ~/.config/nvim nvim
 ```
 
 - Stow symlinks everything into `~/.config/` (configured via `.stowrc`)
+- Neovim uses a flat package layout and is stowed with an explicit target (`~/.config/nvim`)
 - Tmux plugins are excluded from stow (see `.stowrc`) — TPM must be installed separately (see below)
 
 ## Per-tool Configuration
@@ -113,12 +115,64 @@ Mouse-first agent multiplexer; config mirrors the tmux setup where herdr support
 
 ### Neovim
 
-- **Distribution:** [LazyVim](https://www.lazyvim.org/)
-- **Theme:** Catppuccin Mocha
-- **Languages:** Clojure (Conjure, clojure-lsp, clj-kondo), Python (Pyright, Ruff, neotest, nvim-dap)
-- **Extras:** `lang.clojure`, `lang.python`, `dap.core`, `test.core`, `lang.{git,json,markdown,sql,terraform,typescript,yaml}`
-- **Plugins:** tmux-navigator for seamless pane navigation
-- **Post-install:** run `:MasonInstall clojure-lsp clj-kondo` inside nvim
+LazyVim-like stack (no Snacks) on Neovim 0.12 [`vim.pack`](https://neovim.io/doc/user/pack.html#vim.pack).
+
+- **Theme:** Rose Pine **Moon** + transparency
+- **Config:** `~/.config/nvim/init.lua` → `lua/mrbarboza/`
+- **Stow:** `stow -t ~/.config/nvim nvim`
+- **First run:** start `nvim` once — installs ~40 plugins, mason tools, and treesitter parsers (several minutes)
+
+**Stack**
+
+| Area | Plugins |
+|------|---------|
+| UI | which-key, bufferline, lualine, noice, nvim-notify, mini.icons |
+| Editor | oil, telescope, harpoon, trouble, todo-comments |
+| LSP | mason, lspconfig, conform, nvim-lint, nvim-cmp |
+| Editing | mini.pairs, mini.comment, mini.surround, yanky |
+| Git | gitsigns, lazygit |
+| Lang | Python, TypeScript (vtsls), Markdown, YAML, Docker |
+
+**Keymaps (highlights)**
+
+| Keys | Action |
+|------|--------|
+| `<leader>e` / `<leader>fe` | Oil explorer (root / cwd) |
+| `<leader>ff` / `<leader><space>` | Find files (telescope) |
+| `<leader>/` / `<leader>sg` | Live grep |
+| `<leader>sk` | All keymaps (telescope) |
+| `<leader>bd` / `<leader>bo` | Delete buffer / other buffers |
+| `<leader>bb` | Switch to other buffer |
+| `<leader>H` / `<leader>h` | Harpoon add / menu |
+| `<leader>1`–`9` | Harpoon jump |
+| `<leader>gg` / `<leader>gG` | LazyGit (root / cwd) |
+| `<leader>gh*` | Gitsigns hunks |
+| `<leader>cf` / `<leader>uf` | Format / toggle format-on-save |
+| `<leader>ca` / `<leader>co` | Code action / organize imports |
+| `<leader>cd` / `]d` / `[d` | Line diagnostics / jump |
+| `gd` / `gr` / `K` | LSP definition / refs / hover |
+| `<leader>xx` / `<leader>cS` | Trouble diagnostics / LSP symbols |
+| `<leader>qs` | Restore session |
+| `<leader>us` / `<leader>uw` / `<leader>uh` | Toggle spell / wrap / inlay hints |
+| `<C-s>` | Save file |
+| `<leader>?` | Buffer keymaps (which-key) |
+
+Full LazyVim-style maps live in [`nvim/lua/mrbarboza/keymaps.lua`](nvim/lua/mrbarboza/keymaps.lua) and plugin modules under [`nvim/lua/mrbarboza/plugins/`](nvim/lua/mrbarboza/plugins/).
+
+**External tools:** `lazygit`, `rg` or `fd` (telescope), `tree-sitter-cli` (Homebrew), language servers via `:Mason`
+
+**Health / first-time setup**
+
+```bash
+brew install tree-sitter-cli
+```
+
+Mason binaries are on `PATH` via [`zsh/mrbarboza.zsh`](zsh/mrbarboza.zsh). After the first `nvim` session, run `:checkhealth` and:
+
+- `:TSUpdate` — rebuild treesitter parsers (needs `tree-sitter` CLI)
+- `:Mason` — install any missing LSPs/formatters (yamlls, dockerls, docker-compose-language-service, etc.)
+
+Add plugins in [`nvim/lua/mrbarboza/pack.lua`](nvim/lua/mrbarboza/pack.lua); per-plugin setup lives under [`nvim/lua/mrbarboza/plugins/`](nvim/lua/mrbarboza/plugins/).
 
 ## Tmux Plugin Setup
 
