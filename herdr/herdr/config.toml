@@ -6,6 +6,9 @@ auto_switch = true
 dark_name  = "rose-pine"
 light_name = "rose-pine-dawn"
 
+[theme.custom]
+panel_bg = "reset"
+
 [keys]
 focus_agent      = "prefix+alt+1..9"
 switch_workspace = "prefix+shift+1..9"
@@ -26,12 +29,12 @@ directory = "~/.herdr/worktrees"
 mouse_capture                     = true
 mouse_scroll_lines                = 3
 accent                            = "#f6c178"
-agent_panel_sort                  = "priority"
+agent_panel_sort = "priority"
 show_agent_labels_on_pane_borders = true
 hide_tab_bar_when_single_tab      = true
 
 [ui.toast]
-delivery = "system"
+delivery = "herdr"
 
 [ui.sound]
 enabled = true
