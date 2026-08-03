@@ -5,7 +5,7 @@ Personal dev environment configuration managed with [GNU Stow](https://www.gnu.o
 ## Tools Overview
 
 | Tool | Purpose |
-|------|---------|
+| ------ | --------- |
 | Zsh | Shell with Zinit plugin manager |
 | Starship | Cross-shell prompt |
 | Tmux | Terminal multiplexer |
@@ -122,10 +122,10 @@ LazyVim-like stack (no Snacks) on Neovim 0.12 [`vim.pack`](https://neovim.io/doc
 - **Stow:** `stow -t ~/.config/nvim nvim`
 - **First run:** start `nvim` once — installs ~40 plugins, mason tools, and treesitter parsers (several minutes)
 
-**Stack**
+#### Stack
 
 | Area | Plugins |
-|------|---------|
+| ------ | --------- |
 | UI | which-key, bufferline, lualine, noice, nvim-notify, mini.icons |
 | Editor | oil, telescope, harpoon, trouble, todo-comments |
 | LSP | mason, lspconfig, conform, nvim-lint, nvim-cmp |
@@ -134,10 +134,10 @@ LazyVim-like stack (no Snacks) on Neovim 0.12 [`vim.pack`](https://neovim.io/doc
 | Lang | Python, TypeScript (vtsls), Markdown, YAML, Docker |
 | Nubank | Clojure (Conjure, clojure-lsp, paredit), nudev — auto when `~/dev/nu` exists |
 
-**Keymaps (highlights)**
+#### Keymaps (highlights)
 
 | Keys | Action |
-|------|--------|
+| ------ | -------- |
 | `<leader>e` / `<leader>fe` | Oil explorer (root / cwd) |
 | `<leader>ff` / `<leader><space>` | Find files (telescope) |
 | `<leader>/` / `<leader>sg` | Live grep |
@@ -162,7 +162,7 @@ Full LazyVim-style maps live in [`nvim/lua/mrbarboza/keymaps.lua`](nvim/lua/mrba
 
 **External tools:** `lazygit`, `rg` or `fd` (telescope), `tree-sitter-cli` (Homebrew), language servers via `:Mason`
 
-**Health / first-time setup**
+#### Health / first-time setup
 
 ```bash
 brew install tree-sitter-cli
@@ -180,7 +180,7 @@ Add plugins in [`nvim/lua/mrbarboza/pack.lua`](nvim/lua/mrbarboza/pack.lua); per
 Enabled when `~/dev/nu` exists (or set `NU_HOME`). Disable with `MRBARBOZA_NUBANK=0`. Force on elsewhere with `MRBARBOZA_NUBANK=1`.
 
 | Component | Details |
-|-----------|---------|
+| ----------- | --------- |
 | REPL | [Conjure](https://github.com/Olical/conjure) + `cmp-conjure`; `,K` / `,gd` for doc/def (localleader `,`) |
 | LSP | `clojure-lsp` via Mason |
 | Editing | `nvim-paredit`, treesitter `clojure` |
