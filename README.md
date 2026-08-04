@@ -81,8 +81,8 @@ Mouse-first agent multiplexer; config mirrors the tmux setup where herdr support
 - Config lives at `~/.config/herdr/config.toml` (stowed as an individual file symlink,
   since herdr keeps runtime sockets/logs in that same directory)
 - Notification sounds: WC3 peon mp3s in `herdr/herdr/sounds/` (stowed as a directory
-  symlink), wired via `done_path`/`request_path` in `[ui.sound]` — "Work complete!"
-  when an agent finishes, "Ready to work!" when it needs input
+  symlink), wired via `done_path`/`request_path` in `[ui.sound]` — "Ready to work!"
+  when an agent finishes, "Something need doing?" when it needs input
 - Not ported from tmux: vim-tmux-navigator passthrough, directional resize, and the TPM
   plugin stack (thumbs/fzf/yank/floax/sessionx) — herdr has its own plugin system
 
