@@ -1,6 +1,0 @@
-{
-  "ignores": ["tmux/plugins/**"],
-  "config": {
-    "MD013": false
-  }
-}
