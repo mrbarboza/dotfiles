@@ -1,0 +1,31 @@
+return {
+  {
+    "rose-pine/neovim",
+    name = "rose-pine",
+    priority = 1000,
+    opts = {
+      variant = "main", -- auto | main | moon | dawn
+      dark_variant = "main",
+      dim_inactive_windows = false,
+      extend_background_behind_borders = true,
+      enable = {
+        terminal = true,
+        legacy_highlights = true,
+        migrations = true,
+      },
+      styles = {
+        bold = true,
+        italic = true,
+        transparency = false,
+      },
+    },
+    config = function(_, opts)
+      require("rose-pine").setup(opts)
+      vim.cmd("colorscheme rose-pine")
+    end,
+  },
+
+  -- Disable LazyVim's default colorscheme plugins if they conflict
+  { "catppuccin/nvim", enabled = false },
+  { "folke/tokyonight.nvim", enabled = false },
+}
