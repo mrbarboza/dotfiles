@@ -1,2 +1,24 @@
+# Nix
+result
+result-*
+.direnv/
+
+# macOS
 .DS_Store
-tmux/plugins/
+.AppleDouble
+.LSOverride
+
+# Editor
+*.swp
+*~
+.idea/
+.vscode/
+
+# Secrets / local overrides (never commit)
+*.local.nix
+secrets.yaml
+.env
+.env.*
+
+# LazyVim / Neovim lock (optional — some prefer committing it)
+# config/nvim/lazy-lock.json
