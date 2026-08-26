@@ -6,8 +6,25 @@ auto_switch = true
 dark_name  = "rose-pine"
 light_name = "rose-pine-dawn"
 
+# Rose Pine Moon palette (https://rosepinetheme.com/palette/) - herdr ships only
+# base "rose-pine" and "rose-pine-dawn" built-ins, no "moon" variant, so the dark
+# palette is remapped here to match ghostty/wezterm's rose-pine-moon scheme.
 [theme.custom]
-panel_bg = "reset"
+panel_bg    = "#232136" # base
+surface_dim = "#232136" # base
+surface0    = "#2a273f" # surface
+surface1    = "#393552" # overlay
+overlay0    = "#393552" # overlay
+overlay1    = "#44415a" # highlight med
+text        = "#e0def4" # text
+subtext0    = "#6e6a86" # muted
+mauve       = "#c4a7e7" # iris
+green       = "#3e8fb0" # pine
+yellow      = "#f6c177" # gold
+red         = "#eb6f92" # love
+blue        = "#3e8fb0" # pine
+teal        = "#9ccfd8" # foam
+peach       = "#ea9a97" # rose
 
 [keys]
 focus_agent      = "prefix+alt+1..9"
@@ -28,7 +45,7 @@ directory = "~/.herdr/worktrees"
 [ui]
 mouse_capture                     = true
 mouse_scroll_lines                = 3
-accent                            = "#f6c178"
+accent                            = "#f6c177"
 agent_panel_sort = "priority"
 show_agent_labels_on_pane_borders = true
 hide_tab_bar_when_single_tab      = true
