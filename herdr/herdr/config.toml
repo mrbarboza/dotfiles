@@ -2,7 +2,10 @@ onboarding = false
 
 [theme]
 name       = "rose-pine"
-auto_switch = true
+# herdr's [theme.custom] overrides are global - they are not scoped per
+# dark_name/light_name variant - so auto_switch stays off to keep the
+# Moon overrides below from leaking onto rose-pine-dawn's own palette.
+auto_switch = false
 dark_name  = "rose-pine"
 light_name = "rose-pine-dawn"
 
@@ -10,7 +13,7 @@ light_name = "rose-pine-dawn"
 # base "rose-pine" and "rose-pine-dawn" built-ins, no "moon" variant, so the dark
 # palette is remapped here to match ghostty/wezterm's rose-pine-moon scheme.
 [theme.custom]
-panel_bg    = "#232136" # base
+panel_bg    = "reset"   # keep terminal-inherited transparency/blur behind panels
 surface_dim = "#232136" # base
 surface0    = "#2a273f" # surface
 surface1    = "#393552" # overlay
