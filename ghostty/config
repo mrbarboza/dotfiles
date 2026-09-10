@@ -2,11 +2,17 @@
 theme = Rose Pine Moon
 
 # Font (wezterm: Hack Nerd Font DemiBold, size 15 on macOS)
+# No DemiBold instance installed for this family, thicken approximates it
 font-family = Hack Nerd Font
 font-size = 15
+font-thicken = true
 
 # Window (wezterm: window_decorations = "RESIZE")
-window-decoration = false
+# auto keeps a real titlebar object so macos-titlebar-style below can theme it;
+# false leaves an unthemed gray strip behind the traffic lights
+window-decoration = auto
+macos-titlebar-style = transparent
+macos-titlebar-proxy-icon = hidden
 window-padding-y = 8
 
 # Background (wezterm macOS: opacity 0.8, blur 50)
