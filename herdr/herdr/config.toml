@@ -49,7 +49,7 @@ directory = "~/.herdr/worktrees"
 mouse_capture                     = true
 mouse_scroll_lines                = 3
 accent                            = "#f6c177"
-agent_panel_sort = "priority"
+agent_panel_sort = "spaces"
 show_agent_labels_on_pane_borders = true
 hide_tab_bar_when_single_tab      = true
 
