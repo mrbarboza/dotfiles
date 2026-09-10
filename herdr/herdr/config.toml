@@ -57,7 +57,7 @@ hide_tab_bar_when_single_tab      = true
 delivery = "herdr"
 
 [ui.sound]
-enabled      = true
+enabled      = false
 done_path    = "sounds/done.mp3"    # WC3 peon: "Ready to work!"
 request_path = "sounds/request.mp3" # WC3 peon: "Something need doing?"
 
