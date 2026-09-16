@@ -25,7 +25,7 @@ mauve       = "#c4a7e7" # iris
 green       = "#3e8fb0" # pine
 yellow      = "#f6c177" # gold
 red         = "#eb6f92" # love
-blue        = "#3e8fb0" # pine
+blue        = "#908caa" # subtle - moon has no 2nd blue hue; pine (green) reused subtle for distinctness
 teal        = "#9ccfd8" # foam
 peach       = "#ea9a97" # rose
 
