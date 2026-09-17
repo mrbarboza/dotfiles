@@ -1,7 +1,7 @@
 onboarding = false
 
 [theme]
-name       = "rose-pine"
+name = "solarized"
 # herdr's [theme.custom] overrides are global - they are not scoped per
 # dark_name/light_name variant - so auto_switch stays off to keep the
 # Moon overrides below from leaking onto rose-pine-dawn's own palette.

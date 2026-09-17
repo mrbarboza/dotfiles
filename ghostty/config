@@ -1,5 +1,5 @@
-# Theme (wezterm: color_scheme = "rose-pine-moon")
-theme = Rose Pine Moon
+# Theme
+theme = iTerm2 Solarized Dark
 
 # Font (wezterm: Hack Nerd Font DemiBold, size 15 on macOS)
 # No DemiBold instance installed for this family, thicken approximates it
@@ -16,7 +16,7 @@ macos-titlebar-proxy-icon = hidden
 window-padding-y = 8
 
 # Background (wezterm macOS: opacity 0.8, blur 50)
-background-opacity = 0.8
+background-opacity = 0.75
 background-blur = 50
 
 # Inactive split dimming (wezterm: inactive_pane_hsb brightness 0.5)
