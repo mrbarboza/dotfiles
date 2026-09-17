@@ -2,32 +2,28 @@ onboarding = false
 
 [theme]
 name = "solarized"
-# herdr's [theme.custom] overrides are global - they are not scoped per
-# dark_name/light_name variant - so auto_switch stays off to keep the
-# Moon overrides below from leaking onto rose-pine-dawn's own palette.
 auto_switch = false
-dark_name  = "rose-pine"
-light_name = "rose-pine-dawn"
+dark_name  = "solarized"
+light_name = "solarized-light"
 
-# Rose Pine Moon palette (https://rosepinetheme.com/palette/) - herdr ships only
-# base "rose-pine" and "rose-pine-dawn" built-ins, no "moon" variant, so the dark
-# palette is remapped here to match ghostty/wezterm's rose-pine-moon scheme.
+# Solarized Dark palette (https://ethanschoonover.com/solarized/) to match
+# ghostty/wezterm's "iTerm2 Solarized Dark" scheme.
 [theme.custom]
 panel_bg    = "reset"   # keep terminal-inherited transparency/blur behind panels
-surface_dim = "#232136" # base
-surface0    = "#2a273f" # surface
-surface1    = "#393552" # overlay
-overlay0    = "#393552" # overlay
-overlay1    = "#44415a" # highlight med
-text        = "#e0def4" # text
-subtext0    = "#6e6a86" # muted
-mauve       = "#c4a7e7" # iris
-green       = "#3e8fb0" # pine
-yellow      = "#f6c177" # gold
-red         = "#eb6f92" # love
-blue        = "#908caa" # subtle - moon has no 2nd blue hue; pine (green) reused subtle for distinctness
-teal        = "#9ccfd8" # foam
-peach       = "#ea9a97" # rose
+surface_dim = "#002b36" # base03
+surface0    = "#073642" # base02
+surface1    = "#586e75" # base01
+overlay0    = "#586e75" # base01
+overlay1    = "#657b83" # base00
+text        = "#eee8d5" # base2 (lightened)
+subtext0    = "#657b83" # base00
+mauve       = "#6c71c4" # violet
+green       = "#859900" # green
+yellow      = "#b58900" # yellow
+red         = "#dc322f" # red
+blue        = "#268bd2" # blue
+teal        = "#2aa198" # cyan
+peach       = "#cb4b16" # orange
 
 [keys]
 focus_agent      = "prefix+alt+1..9"
@@ -48,7 +44,7 @@ directory = "~/.herdr/worktrees"
 [ui]
 mouse_capture                     = true
 mouse_scroll_lines                = 3
-accent                            = "#f6c177"
+accent                            = "#b58900"
 agent_panel_sort = "spaces"
 show_agent_labels_on_pane_borders = true
 hide_tab_bar_when_single_tab      = true
