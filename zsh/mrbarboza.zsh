@@ -50,9 +50,10 @@ if [ -n "$TMUX" ]; then
   unset _tmux_term
 fi
 
-# Claude Code
+# AI tools
 alias cc='claude --dangerously-skip-permissions'
 alias ca='cursor agent --force --approve-mcps'
+alias co='codex --dangerously-bypass-approvals-and-sandbox'
 
 # Basic
 alias la=tree

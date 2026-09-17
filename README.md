@@ -11,7 +11,6 @@ Personal dev environment configuration managed with [GNU Stow](https://www.gnu.o
 | Tmux | Terminal multiplexer |
 | Herdr | Mouse-first agent multiplexer |
 | Ghostty | GPU-accelerated terminal emulator |
-| Doom Emacs | Emacs distribution with evil bindings |
 | LazyGit | Terminal UI for Git |
 | FZF | Fuzzy finder |
 | WezTerm | GPU-accelerated terminal emulator |
@@ -21,14 +20,14 @@ Personal dev environment configuration managed with [GNU Stow](https://www.gnu.o
 
 - [GNU Stow](https://www.gnu.org/software/stow/)
 - [Homebrew](https://brew.sh/) (macOS)
-- The tools you want to configure: Ghostty, Tmux, Doom Emacs, LazyGit, etc.
+- The tools you want to configure: Ghostty, Tmux, LazyGit, etc.
 
 ## Installation
 
 ```bash
 git clone git@github.com:mrbarboza/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-stow zsh ghostty starship tmux herdr doom lazygit wezterm
+stow zsh ghostty starship tmux herdr lazygit wezterm
 stow -t ~/.config/nvim nvim
 ```
 
@@ -44,7 +43,7 @@ stow -t ~/.config/nvim nvim
 - **Plugins:** syntax highlighting, autosuggestions, fzf-tab, completions
 - **Key aliases:**
   - `v` → `nvim`
-  - `e` → `emacs -nw`
+  - `co` → `codex` in YOLO mode
 - **Keybindings:** `Ctrl+P` / `Ctrl+N` for history navigation
 
 ### Starship
@@ -92,14 +91,6 @@ Mouse-first agent multiplexer; config mirrors the tmux setup where herdr support
 - **Font size:** 19
 - **Background blur:** 20
 - Borderless window, `Option` key as `Alt`
-
-### Doom Emacs
-
-- **Theme:** Tokyo Night
-- **Font:** JetBrains Mono 15pt
-- **Bindings:** Evil (Vim-style)
-- **Features:** corfu completion, Magit, vterm
-- **Config style:** Literate config via `config.org`
 
 ### LazyGit
 
